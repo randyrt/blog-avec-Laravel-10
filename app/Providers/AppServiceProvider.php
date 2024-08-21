@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
     {
         \Schema::defaultStringLength(191);
 
+        // dateTime format with php carbon class
         Blade::directive('datetime', function (string $expression) {
             return "<?=($expression)->format('d/m/Y H:i:s'); ?>";
         });

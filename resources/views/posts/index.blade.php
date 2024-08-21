@@ -3,11 +3,11 @@
             @forelse ($posts as $post )
                 <x-post :$post list /> 
             @empty
-                <p class="text-center text-slate-400">Aucun resultat trouvé</p>
+                <p class="text-center text-purple-000">Aucun resultat trouvé</p>
             @endforelse
-    <div>
-      {{ $posts->links() }}
-    </div>        
+        <div class="px-10 py-10 my-20 rounded">
+        {{ $posts->links() }}
+        </div>        
     </div>
 </x-default-layout>
          

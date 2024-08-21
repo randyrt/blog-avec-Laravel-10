@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="h-full antialiased">
-    <div class="flex flex-col justify-center min-h-full py-12 sm:px-6 lg:px-8">
+<body class="flex flex-col min-h-screen pt-10 pb-16 antialiased">
+    <div class="flex-grow mt-10 md:mt-12 lg:mt-16">
         <div class="flex justify-center">
             <a href="{{ route('index') }}">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 text-slate-900">

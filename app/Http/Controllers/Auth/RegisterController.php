@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Requests\RegisterFormRequest;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -30,16 +31,12 @@ class RegisterController extends Controller
     /**
      * Summary of register
      * @param \Illuminate\Http\Request $request
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function register(Request $request)
+    public function register(RegisterFormRequest $request): RedirectResponse
     {
         // Vérification des champs
-        $validated = $request->validate([
-            'name' => ['required', 'string', 'between:2, 200'],
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed']
-        ]);
+        $validated = $request->validated();
 
         // Haché le mot de passe
         $validated['password'] = Hash::make($validated['password']);

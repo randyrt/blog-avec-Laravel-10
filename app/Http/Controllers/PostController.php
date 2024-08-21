@@ -4,12 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Tag;
 use App\Models\Post;
+use App\Models\Comment;
 use App\Models\Category;
 use Illuminate\View\View;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\SearchFormRequest;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->only('comment');
+    }
 
     /**
      * Summary of postsView
@@ -63,6 +71,30 @@ class PostController extends Controller
         return view('posts.show', [
             'post' => $post
         ]);
+    }
+
+    public function comment(Post $post, Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'comment' => "required|string|between:2,200"
+        ]);
+
+        Comment::create([
+            'content' => $validated['comment'],
+            'post_id' => $post->id,
+            'user_id' => Auth::id()
+
+        ]);
+
+        /*  $comment = new Comment();
+
+           $comment->$validated['comment'];
+           $comment->post_id = $post->id();
+           $comment->user_id = Auth::id();
+
+           $comment->save(); */
+
+        return back()->with('status', 'commentaire ajouté !');
     }
 }
 

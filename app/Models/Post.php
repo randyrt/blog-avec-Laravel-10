@@ -8,10 +8,23 @@ use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Post extends Model
 {
     use HasFactory;
+
+
+    /** Authorize creaction of entities
+     * Summary of fillable
+     * @var array
+     */
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
+    ];
+
 
     /** documentation laravel eager loading
      * Relation who want to load permanantely with the relation with category
@@ -62,9 +75,31 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * Summary of tags
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class);
+    }
+
+    /**
+     * Summary of comments
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class)->latest();
+    }
+
+    /** maehod of create or edit, AdminController
+     * Summary of exists
+     * @return bool
+     */
+    public function exists(): bool
+    {
+        return (bool) $this->id;
     }
 }
 
